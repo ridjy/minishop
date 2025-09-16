@@ -1,0 +1,45 @@
+{% extends 'base_bo.html.twig' %}
+
+{% block title %}Tableau de bord - Administration{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">📊 Tableau de bord</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Produits</h5>
+                    <p class="card-text">150 produits actifs</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Commandes</h5>
+                    <p class="card-text">35 en attente</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Clients</h5>
+                    <p class="card-text">580 inscrits</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Alertes</h5>
+                    <p class="card-text">5 produits en rupture</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

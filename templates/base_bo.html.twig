@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Administration - Back Office{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="bg-light">
+
+<div class="d-flex">
+    {# Sidebar gauche #}
+    <nav class="bg-dark text-white p-3 min-vh-100" style="width:240px;">
+        <h4 class="mb-4">Back Office</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a href="{{ path('app_admin_dashboard') }}" class="nav-link text-white">📊 Tableau de bord</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{{ path('admin_produit_index') }}" class="nav-link text-white">📦 Produits</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{{ path('admin_commande_index') }}" class="nav-link text-white">🧾 Commandes</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{{ path('admin_client_index') }}" class="nav-link text-white">👤 Clients</a>
+            </li>
+        </ul>
+        <div class="mt-auto pt-3 border-top">
+            <a href="#" class="nav-link text-white">⬅️ Retour au site</a>
+        </div>
+    </nav>
+
+    {# Contenu principal #}
+    <main class="flex-grow-1 p-4">
+        {% block body %}{% endblock %}
+    </main>
+</div>
+
+<footer class="bg-dark text-light py-4">
+    <div class="container text-center">
+        <p class="mb-0">&copy; {{ "now"|date("Y") }} MiniShop - Tous droits réservés</p>
+    </div>
+</footer>
+{{ importmap() }}
+{% block javascripts %}{% endblock %}
+</body>
+</html>
