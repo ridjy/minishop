@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique - MiniShop{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <h1 class="mb-4">Notre Boutique</h1>
+
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted">{{ product.description|slice(0, 80) ~ '...' }}</p>
+                            <div class="mt-auto">
+                                <p class="fw-bold mb-2">{{ product.price }} €</p>
+                                <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-primary w-100">
+                                    Ajouter au panier
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun produit disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
