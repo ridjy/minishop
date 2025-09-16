@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - MonShop{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        {# 🏷️ Section Hero / Bannière #}
+        <div class="p-5 mb-4 bg-gradient bg-primary text-white rounded-3">
+            <div class="container py-5">
+                <h1 class="display-5 fw-bold">Bienvenue sur MonShop 🛍️</h1>
+                <p class="col-md-8 fs-4">
+                    Découvrez nos meilleurs produits aux meilleurs prix.
+                    Livraison rapide et paiement sécurisé.
+                </p>
+                <a href="{{ path('shop_index') }}" class="btn btn-success btn-lg">Voir les produits</a>
+            </div>
+        </div>
+
+        {# ⭐ Produits mis en avant #}
+        <h2 class="mb-4">Produits populaires</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ asset('uploads/products/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted">{{ product.price }} €</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a href="{{ path('product_show', {id: product.id}) }}" class="btn btn-outline-primary btn-sm">Voir</a>
+                            <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-success btn-sm">Ajouter 🛒</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun produit disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+
+        {# 🔗 Catégories rapides #}
+        <h2 class="mt-5 mb-4">Parcourir par catégories</h2>
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-md-3 mb-3">
+                    <a href="{{ path('category_show', {id: category.id}) }}" class="btn btn-outline-secondary w-100">
+                        {{ category.name }}
+                    </a>
+                </div>
+            {% else %}
+                <p>Aucune catégorie disponible.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
