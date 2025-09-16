@@ -37,6 +37,7 @@ class RegistrationController extends AbstractController
 
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $user->setRoles(['ROLE_USER']);
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -53,7 +54,7 @@ class RegistrationController extends AbstractController
             //log directement l'utilisateur
             //return $security->login($user, 'form_login', 'main');
 
-            $this->addFlash('success', 'Please check your email to confirm your registration.');
+            $this->addFlash('success', 'Veuillez vérifier votre email pour valider votre compte.');
             return $this->redirectToRoute('app_login');
         }
 
