@@ -34,6 +34,6 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {{ pagerfanta(produits) }}
     <a href="{{ path('app_admin_produit_new') }}" class="btn btn-outline-primary">Ajouter un produit</a>
 {% endblock %}

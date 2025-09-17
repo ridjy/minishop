@@ -32,7 +32,7 @@ final class ProduitFactory extends PersistentProxyObjectFactory
     {
         $images = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'];
         return [
-            'nom' => self::faker()->unique()->regexify('[A-Za-z0-9]{3,15}'),
+            'nom' => self::faker()->unique()->word(),
             'description' => self::faker()->paragraph(),
             'prix' => self::faker()->randomFloat(2, 5, 200),
             'stock' => self::faker()->numberBetween(0, 50),

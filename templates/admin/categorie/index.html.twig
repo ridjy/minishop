@@ -28,6 +28,6 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {{ pagerfanta(categories) }}
     <a href="{{ path('app_admin_categorie_new') }}" class="btn btn-outline-primary">Ajouter une catégorie</a>
 {% endblock %}
