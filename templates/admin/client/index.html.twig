@@ -1,20 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_bo.html.twig' %}
 
-{% block title %}Hello ClientController!{% endblock %}
+{% block title %}Liste des clients{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Liste des clients</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/EddyBD/Projets/minishop/src/Controller/Admin/ClientController.php</code></li>
-        <li>Your template at <code>D:/EddyBD/Projets/minishop/templates/admin/client/index.html.twig</code></li>
-    </ul>
-</div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Adresse mail</th>
+            <th>Actif</th>
+            <th>Nombre de commandes</th>
+            <th>Montant total dépensé sur le site</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for client in clients %}
+            <tr>
+                <td>{{ client.lastname }}</td>
+                <td>{{ client.firstname }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.isVerified }}</td>
+                <td>{{ client.commandes|length }}</td>
+                <td>0</td>
+                <td>
+                    <a href="{{ path('app_admin_client_show', {'id': client.id}) }}" class="btn btn-outline-primary">Afficher</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun client enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ pagerfanta(clients) }}
 {% endblock %}

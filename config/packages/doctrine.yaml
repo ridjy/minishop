@@ -24,6 +24,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            string_functions:
+                CAST: App\DQL\CastFunction
         controller_resolver:
             auto_mapping: false
 
