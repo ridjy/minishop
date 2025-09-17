@@ -30,10 +30,16 @@ final class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $newFilename = $this->saveImage($imageFile);
+                $produit->setImage($newFilename);
+            }
+
             $entityManager->persist($produit);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_produit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/produit/new.html.twig', [
@@ -57,9 +63,15 @@ final class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $newFilename = $this->saveImage($imageFile);
+                $produit->setImage($newFilename);
+            }
+            $entityManager->persist($produit);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_produit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/produit/edit.html.twig', [
@@ -77,5 +89,17 @@ final class ProduitController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function saveImage($imageFile) : string
+    {
+        $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+        // Déplace le fichier dans le dossier declaré dans config/services.yaml
+        $imageFile->move(
+            $this->getParameter('images_directory'),
+            $newFilename
+        );
+        return $newFilename;
     }
 }

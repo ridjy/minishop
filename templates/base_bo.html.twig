@@ -14,11 +14,15 @@
     <nav class="bg-dark text-white p-3 min-vh-100" style="width:240px;">
         <h4 class="mb-4">Back Office</h4>
         <ul class="nav flex-column">
+            {% set currentRoute = app.request.attributes.get('_route') %}
             <li class="nav-item mb-2">
-                <a href="{{ path('app_admin_dashboard') }}" class="nav-link text-white">📊 Tableau de bord</a>
+                <a href="{{ currentRoute == 'admin_dashboard' ? '#' : path('admin_dashboard') }}" class="nav-link text-white">📊 Tableau de bord</a>
             </li>
             <li class="nav-item mb-2">
-                <a href="{{ path('admin_produit_index') }}" class="nav-link text-white">📦 Produits</a>
+                <a href="{{ currentRoute == 'app_admin_categorie_index' ? '#' : path('app_admin_categorie_index') }}" class="nav-link text-white">🛍️ Catégories</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="{{ currentRoute == 'admin_produit_index' ? '#' : path('admin_produit_index') }}" class="nav-link text-white">📦 Produits</a>
             </li>
             <li class="nav-item mb-2">
                 <a href="{{ path('admin_commande_index') }}" class="nav-link text-white">🧾 Commandes</a>
@@ -28,7 +32,7 @@
             </li>
         </ul>
         <div class="mt-auto pt-3 border-top">
-            <a href="#" class="nav-link text-white">⬅️ Retour au site</a>
+            <a href="{{ path('app_home') }}" class="nav-link text-white">⬅️ Retour au site</a>
         </div>
     </nav>
 

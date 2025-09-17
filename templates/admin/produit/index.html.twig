@@ -1,43 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_bo.html.twig' %}
 
-{% block title %}Produit index{% endblock %}
+{% block title %}Listes des produits{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
+    <h1>Listes des produits</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Prix</th>
                 <th>Stock</th>
-                <th>Image</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for produit in produits %}
             <tr>
-                <td>{{ produit.id }}</td>
                 <td>{{ produit.nom }}</td>
                 <td>{{ produit.description }}</td>
                 <td>{{ produit.prix }}</td>
                 <td>{{ produit.stock }}</td>
-                <td>{{ produit.image }}</td>
                 <td>
-                    <a href="{{ path('app_admin_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_admin_produit_edit', {'id': produit.id}) }}">edit</a>
+                    <a href="{{ path('app_admin_produit_show', {'id': produit.id}) }}" class="btn btn-outline-primary">Afficher</a>
+                    <a href="{{ path('app_admin_produit_edit', {'id': produit.id}) }}" class="btn btn-outline-success">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun résultat</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_produit_new') }}">Create new</a>
+    <a href="{{ path('app_admin_produit_new') }}" class="btn btn-outline-primary">Ajouter un produit</a>
 {% endblock %}

@@ -1,4 +1,14 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_label(form.nom, null, {
+        label_attr: { class: 'form-label fw-bold' }
+    }) }}
+    {{ form_widget(form.nom, {
+        attr: {
+            style: 'width: auto;',
+            class: 'form-control d-inline-block'
+        }
+    }) }}
+<br/>
+<button class="btn btn-primary mt-2">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

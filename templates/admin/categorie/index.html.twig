@@ -1,14 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_bo.html.twig' %}
 
-{% block title %}Categorie index{% endblock %}
+{% block title %}Liste des categories{% endblock %}
 
 {% block body %}
-    <h1>Categorie index</h1>
+    <h1>Liste des categories</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>actions</th>
             </tr>
@@ -16,20 +15,19 @@
         <tbody>
         {% for categorie in categories %}
             <tr>
-                <td>{{ categorie.id }}</td>
                 <td>{{ categorie.nom }}</td>
                 <td>
-                    <a href="{{ path('app_admin_categorie_show', {'id': categorie.id}) }}">show</a>
-                    <a href="{{ path('app_admin_categorie_edit', {'id': categorie.id}) }}">edit</a>
+                    <a href="{{ path('app_admin_categorie_show', {'id': categorie.id}) }}" class="btn btn-outline-primary">Afficher</a>
+                    <a href="{{ path('app_admin_categorie_edit', {'id': categorie.id}) }}" class="btn btn-outline-success">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucune catégorie enregistrée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_categorie_new') }}">Create new</a>
+    <a href="{{ path('app_admin_categorie_new') }}" class="btn btn-outline-primary">Ajouter une catégorie</a>
 {% endblock %}

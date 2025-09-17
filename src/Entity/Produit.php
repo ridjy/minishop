@@ -8,9 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[UniqueEntity(['nom'])]
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
-#[Broadcast]
 class Produit
 {
     #[ORM\Id]
@@ -18,15 +20,24 @@ class Produit
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(min: 3)]
+    #[Assert\NotBlank()]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Positive]
+    #[Assert\Regex(
+        pattern: '/^\d+([.,]\d{1,2})?$/',
+        message: 'Veuillez entrer un nombre valide avec au maximum 2 décimales.'
+    )]
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $prix = null;
 
+    #[Assert\Positive]
     #[ORM\Column(nullable: true)]
     private ?int $stock = null;
 
