@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\CategorieRepository;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,11 +11,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class SiteController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function accueil(): Response
+    public function accueil(CategorieRepository $categorieRepository, ProduitRepository $produitRepository): Response
     {
+        $cCategories = $categorieRepository->findCategoriesPhares(5);
+        $cProduit = $produitRepository->findProduitPhares(5);
+
         return $this->render('site/accueil.html.twig', [
-            'products' => [],
-            'categories' => []
+            'products' => $cProduit,
+            'categories' => $cCategories
         ]);
     }
 }

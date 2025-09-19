@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.nom }} — Boutique{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <a href="#" class="btn btn-outline-warning">Afficher toutes les catégories</a>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                {% if product.image is defined and product.image %}
+                    <img src="{{ asset('uploads/' ~ product.image) }}" class="card-img-top img-fluid" alt="{{ product.nom }}">
+                {% else %}
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>{{ product.nom }}</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em" text-anchor="middle">Image</text></svg>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h1 class="h3">{{ product.nom }}</h1>
+            <div class="mb-3">
+                <span class="h4">{{ product.prix | number_format(2, '.', ' ') }} €</span>
+            </div>
+            <p class="mb-3">{{ product.description | raw }}</p>
+            {% if product.stock is defined %}
+                <p class="mb-3">
+                    {% if product.stock > 0 %}
+                        <span class="badge bg-success">En stock : {{ product.stock }}</span>
+                    {% else %}
+                        <span class="badge bg-danger">Rupture de stock</span>
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            {# Formulaire d'ajout au panier #}
+            <form method="post" action="{{ path('cart_add', {'id': product.id}) }}" class="row g-2 align-items-center" novalidate>
+                <input type="hidden" name="_token" value="{{ csrf_token('add-to-cart' ~ product.id) }}">
+                <div class="col-auto">
+                    <label for="quantity" class="visually-hidden">Quantité</label>
+                    <div class="input-group">
+                        <button class="btn btn-outline-secondary" type="button" id="qty-decrease" aria-label="Réduire">−</button>
+                        <input id="quantity" name="quantity" type="number" class="form-control text-center" value="1" min="1" {% if product.stock is defined %} max="{{ product.stock }}" {% endif %} style="width:90px;">
+                        <button class="btn btn-outline-secondary" type="button" id="qty-increase" aria-label="Augmenter">+</button>
+                    </div>
+                    <div class="form-text">Choisissez la quantité désirée.</div>
+                </div>
+
+                <div class="col-auto">
+                    {% if product.stock is defined and product.stock == 0 %}
+                        <button class="btn btn-primary" type="submit" disabled>Ajouter au panier</button>
+                    {% else %}
+                        <button class="btn btn-primary" type="submit">Ajouter au panier</button>
+                    {% endif %}
+                </div>
+
+                <div class="col-12 mt-2">
+                    <a href="{{ path('cart_index') }}" class="btn btn-outline-warning">Voir le panier</a>
+                </div>
+            </form>
+
+            {# TODO Produit similaires (même categorie, peut être retrieve via API #}
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        (function(){
+            const dec = document.getElementById('qty-decrease');
+            const inc = document.getElementById('qty-increase');
+            const input = document.getElementById('quantity');
+
+            function toInt(v){ return parseInt(v, 10) || 1; }
+
+            dec && dec.addEventListener('click', function(){
+                let val = toInt(input.value);
+                const min = parseInt(input.getAttribute('min') || 1, 10);
+                if (val > min) input.value = val - 1;
+            });
+
+            inc && inc.addEventListener('click', function(){
+                let val = toInt(input.value);
+                const maxAttr = input.getAttribute('max');
+                if (maxAttr !== null) {
+                    const max = parseInt(maxAttr, 10);
+                    if (val < max) input.value = val + 1;
+                } else {
+                    input.value = val + 1;
+                }
+            });
+
+            // Prevent negative / zero manual input
+            input && input.addEventListener('change', function(){
+                const min = parseInt(input.getAttribute('min') || 1, 10);
+                const maxAttr = input.getAttribute('max');
+                let val = toInt(input.value);
+                if (val < min) val = min;
+                if (maxAttr !== null) {
+                    const max = parseInt(maxAttr, 10);
+                    if (val > max) val = max;
+                }
+                input.value = val;
+            });
+        })();
+    </script>
+{% endblock %}

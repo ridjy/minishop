@@ -27,6 +27,23 @@ class ProduitRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return array Produit[] with most sales
+     */
+    public function findProduitPhares(int $nbr) : array
+    {
+
+        return $this->createQueryBuilder('p')
+            ->addSelect('COUNT(DISTINCT p.id) as HIDDEN nbr')
+            ->innerJoin('p.ligneCommandes', 'l')
+            ->groupBy('p.id')
+            ->orderBy('nbr', 'DESC')
+            ->setMaxResults($nbr)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     //    public function findOneBySomeField($value): ?Produit
     //    {
     //        return $this->createQueryBuilder('p')

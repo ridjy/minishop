@@ -27,6 +27,23 @@ class CategorieRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return array categorie[] with most product
+     */
+    public function findCategoriesPhares(int $nbr) : array
+    {
+
+        return $this->createQueryBuilder('c')
+            ->addSelect('COUNT(DISTINCT c.id) as HIDDEN nbr')
+            ->innerJoin('c.produit', 'p')
+            ->groupBy('c.id')
+            ->orderBy('nbr', 'DESC')
+            ->setMaxResults($nbr)
+            ->getQuery()
+            ->getResult()
+     ;
+    }
+
     //    public function findOneBySomeField($value): ?Categorie
     //    {
     //        return $this->createQueryBuilder('c')

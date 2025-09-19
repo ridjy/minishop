@@ -5,7 +5,6 @@
 {% block body %}
     <div class="container mt-4">
 
-        {# 🏷️ Section Hero / Bannière #}
         <div class="p-5 mb-4 bg-gradient bg-primary text-white rounded-3">
             <div class="container py-5">
                 <h1 class="display-5 fw-bold">Bienvenue sur MonShop 🛍️</h1>
@@ -17,7 +16,19 @@
             </div>
         </div>
 
-        {# ⭐ Produits mis en avant #}
+        <h2 class="mt-5 mb-4">Parcourir par catégories</h2>
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-md-3 mb-3">
+                    <a href="{{ path('shop_list_by_categorie', {categorie_name: category.nom}) }}" class="btn btn-outline-secondary w-100">
+                        {{ category.nom }}
+                    </a>
+                </div>
+            {% else %}
+                <p>Aucune catégorie disponible.</p>
+            {% endfor %}
+        </div>
+
         <h2 class="mb-4">Produits populaires</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for product in products %}
@@ -36,20 +47,6 @@
                 </div>
             {% else %}
                 <p>Aucun produit disponible pour le moment.</p>
-            {% endfor %}
-        </div>
-
-        {# 🔗 Catégories rapides #}
-        <h2 class="mt-5 mb-4">Parcourir par catégories</h2>
-        <div class="row">
-            {% for category in categories %}
-                <div class="col-md-3 mb-3">
-                    <a href="{{ path('category_show', {id: category.id}) }}" class="btn btn-outline-secondary w-100">
-                        {{ category.name }}
-                    </a>
-                </div>
-            {% else %}
-                <p>Aucune catégorie disponible.</p>
             {% endfor %}
         </div>
 
