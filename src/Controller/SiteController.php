@@ -14,7 +14,7 @@ final class SiteController extends AbstractController
     public function accueil(CategorieRepository $categorieRepository, ProduitRepository $produitRepository): Response
     {
         $cCategories = $categorieRepository->findCategoriesPhares(5);
-        $cProduit = $produitRepository->findProduitPhares(5);
+        $cProduit = $produitRepository->findProduitPhares(10);
 
         return $this->render('site/accueil.html.twig', [
             'products' => $cProduit,

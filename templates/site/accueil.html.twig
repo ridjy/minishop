@@ -41,7 +41,11 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             <a href="{{ path('product_show', {id: product.id}) }}" class="btn btn-outline-primary btn-sm">Voir</a>
-                            <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-success btn-sm">Ajouter 🛒</a>
+                            <form action="{{ path('cart_add') }}" method="post">
+                                <input type="hidden" name="produit" value="{{ product.id }}">
+                                <input type="hidden" name="return_url" value="{{ app.request.uri }}">
+                                <button type="submit" class="btn btn-success btn-sm">Ajouter 🛒</button>
+                            </form>
                         </div>
                     </div>
                 </div>

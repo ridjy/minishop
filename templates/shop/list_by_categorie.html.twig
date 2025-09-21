@@ -16,9 +16,11 @@
                             <p class="card-text text-muted">{{ product.description|slice(0, 80) ~ '...' }}</p>
                             <div class="mt-auto">
                                 <p class="fw-bold mb-2">{{ product.prix }} €</p>
-                                <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-primary w-100">
-                                    Ajouter au panier
-                                </a>
+                                <form action="{{ path('cart_add') }}" method="post">
+                                    <input type="hidden" name="produit" value="{{ product.id }}">
+                                    <input type="hidden" name="return_url" value="{{ app.request.uri }}">
+                                    <button type="submit" class="btn btn-primary w-100">Ajouter au panier 🛒</button>
+                                </form>
                             </div>
                         </div>
                     </div>
