@@ -6,14 +6,6 @@
     <div class="d-flex justify-content-center align-items-center" style="min-height: 75vh;">
         <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
             <h3 class="text-center mb-4">Se connecter</h3>
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endfor %}
 
             {% if app.user %}
                 <div class="mb-3">

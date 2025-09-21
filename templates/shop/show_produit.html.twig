@@ -34,7 +34,7 @@
             {% endif %}
 
             {# Formulaire d'ajout au panier #}
-            <form method="post" action="{{ path('cart_add', {'id': product.id}) }}" class="row g-2 align-items-center" novalidate>
+            <form method="post" action="{{ path('cart_add') }}" class="row g-2 align-items-center">
                 <input type="hidden" name="_token" value="{{ csrf_token('add-to-cart' ~ product.id) }}">
                 <div class="col-auto">
                     <label for="quantity" class="visually-hidden">Quantité</label>
@@ -47,11 +47,13 @@
                 </div>
 
                 <div class="col-auto">
-                    {% if product.stock is defined and product.stock == 0 %}
-                        <button class="btn btn-primary" type="submit" disabled>Ajouter au panier</button>
-                    {% else %}
-                        <button class="btn btn-primary" type="submit">Ajouter au panier</button>
-                    {% endif %}
+                    <input type="hidden" name="produit" value="{{ product.id }}">
+                    <input type="hidden" name="return_url" value="{{ app.request.uri }}">
+                    <button class="btn btn-primary"
+                            type="submit"
+                            {% if product.stock is defined and product.stock == 0 %}disabled{% endif %}>
+                        Ajouter au panier
+                    </button>
                 </div>
 
                 <div class="col-12 mt-2">
