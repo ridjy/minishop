@@ -1,20 +1,89 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Mon Panier{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container my-5">
+        <h1 class="mb-4">🛒 Mon Panier</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Produit</th>
+                    <th scope="col" class="text-center">Prix</th>
+                    <th scope="col" class="text-center">Quantité</th>
+                    <th scope="col" class="text-center">Total</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in app.session.get('cart', []) %}
+                {% set product = item.produit %}
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            {% if product.image is defined and product.image %}
+                                <img src="{{ asset('uploads/' ~ product.image) }}"
+                                     class="rounded me-3"
+                                     width="60"
+                                     height="60" alt="{{ product.nom }}">
+                            {% else %}
+                                <img src="https://placehold.co/60" class="rounded me-3" alt="Produit 1">
+                            {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/EddyBD/Projets/minishop/src/Controller/CartController.php</code></li>
-        <li>Your template at <code>D:/EddyBD/Projets/minishop/templates/cart/index.html.twig</code></li>
-    </ul>
-</div>
+                            <div>
+                                <h6 class="mb-0">Produit 1</h6>
+                                <small class="text-muted">Description courte</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">20 €</td>
+                    <td class="text-center">
+                        <input type="number" class="form-control form-control-sm text-center" value="2" min="1" style="width:80px;">
+                    </td>
+                    <td class="text-center">40 €</td>
+                    <td class="text-end">
+                        <a href="#" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i> Supprimer
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">
+                            Aucun produit dans le panier
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row justify-content-end">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Résumé de la commande</h5>
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Sous-total</span>
+                                <strong>55 €</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Frais de livraison</span>
+                                <strong>5 €</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total</span>
+                                <strong>60 €</strong>
+                            </li>
+                        </ul>
+                        <a href="#" class="btn btn-success w-100">Passer la commande</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

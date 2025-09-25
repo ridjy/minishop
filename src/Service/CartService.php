@@ -21,7 +21,7 @@ class CartService
             $cart[$produit->getId()]['qte'] += $qte;
         } else {
             $cart[$produit->getId()] = [
-                'id'  => $produit,
+                'produit'  => $produit,
                 'qte' => $qte,
             ];
         }

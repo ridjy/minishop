@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class CartController extends AbstractController
 {
     #[Route('/cart', name: 'cart_index')]
-    public function index(): Response
+    public function index(CartService $cartService): Response
     {
         return $this->render('cart/index.html.twig', [
             'controller_name' => 'CartController',
